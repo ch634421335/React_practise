@@ -1,17 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import './04style.css'
+let exampleStyle = {
+    background:'skyblue',
+    borderBottom:'1px solid red'
+}
+let element = (
+    <div>
+        <h1 style={exampleStyle}>helloWorld</h1>
+    </div>
+)
+let classStr = 'redBg'
+let element2 = (
+    <div>
+        <h1 className={'abc '+classStr}>helloWorld</h1>
+    </div>
+)
+let classStr2 =['abc2','redBg2']
+let element3 = (
+    <div>
+        <h1 style={{color:'red'}} className={classStr2.join(' ')}>helloWorld</h1>
+    </div>
+)
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    element3,
+    document.querySelector('#root')
+)
