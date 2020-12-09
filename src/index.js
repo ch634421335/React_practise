@@ -1,28 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './04style.css'
-let exampleStyle = {
-    background:'skyblue',
-    borderBottom:'1px solid red'
+import './tab.css'
+class Tab extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            active:'',
+            str:''
+        }
+        this.clickEvent = this.clickEvent.bind(this)
+    }
+    clickEvent(e){
+        if(e.target.innerHTML.includes('一')){
+            this.setState({
+                active:'active',
+                str:''
+            })
+        }
+        else if(e.target.innerHTML.includes('二')){
+            this.setState({
+                str:'active',
+                active:''
+            })
+        }
+    }
+    render() {
+        return(
+            <div>
+                <button onClick={this.clickEvent}>内容一</button>
+                <button onClick={this.clickEvent}>内容二</button>
+                <div className={"content "+this.state.active}>
+                    <h1>内容一</h1>
+                </div>
+                <div className={"content "+this.state.str}>
+                    <h1>内容二</h1>
+                </div>
+            </div>
+        )
+    }
 }
-let element = (
-    <div>
-        <h1 style={exampleStyle}>helloWorld</h1>
-    </div>
-)
-let classStr = 'redBg'
-let element2 = (
-    <div>
-        <h1 className={'abc '+classStr}>helloWorld</h1>
-    </div>
-)
-let classStr2 =['abc2','redBg2']
-let element3 = (
-    <div>
-        <h1 style={{color:'red'}} className={classStr2.join(' ')}>helloWorld</h1>
-    </div>
-)
 ReactDOM.render(
-    element3,
+    <Tab/>,
     document.querySelector('#root')
 )
