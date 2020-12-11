@@ -1,30 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-function ListItem(props){
-    return(
-        <li>
-            <h3>{props.item.title}</h3>
-            <p>{props.item.content}</p>
-        </li>
-    )
-}
-class ListItem2 extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-    render() {
-
-        return(
-            <li onClick={()=>{this.clickEvent(this.props.index,this.props.item.title)}}>
-                <h3>{this.props.item.title}</h3>
-                <p>{this.props.item.content}</p>
-            </li>
-        )
-    }
-    clickEvent=(index,title)=>{
-        alert(index+'-'+title)
-    }
-}
 class Welcome extends React.Component{
     constructor(props) {
         super(props);
@@ -46,11 +21,16 @@ class Welcome extends React.Component{
         }
     }
     render() {
-        let listArr = this.state.list.map((item,index)=>{
-            return(
-                <ListItem2  key={index} item={item} index={index}/>
+        let listArr = []
+        for(let i=0;i<this.state.list.length;i++){
+            let item = (
+                <li>
+                    <h1>{this.state.list[i].title}</h1>
+                    <span>{this.state.list[i].content}</span>
+                </li>
             )
-        })
+            listArr.push(item)
+        }
         return(
             <div>
                 <h1>今天课程内容</h1>
