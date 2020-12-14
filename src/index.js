@@ -46,21 +46,27 @@ class Welcome extends React.Component{
         }
     }
     render() {
-        let listArr = this.state.list.map((item,index)=>{
-            return(
-                <ListItem2  key={index} item={item} index={index}/>
-            )
-        })
         return(
             <div>
-                <h1>今天课程内容</h1>
-                <ul>
-                    {listArr}
-                </ul>
+                {
+                    this.state.list.map((item,index)=>{
+                        return(
+                            <li key={index} onClick={()=>{this.clickFn(item.title,index)}}>
+                                <h3>{item.title}</h3>
+                                <p>{item.content}</p>
+                            </li>
+                        )
+                    })
+                }
             </div>
         )
+
+    }
+    clickFn=(title,index)=>{
+        alert(title+'-'+index)
     }
 }
+
 ReactDOM.render(
     <Welcome/>,
     document.querySelector('#root')
