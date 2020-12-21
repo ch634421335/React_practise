@@ -1,60 +1,57 @@
-import React from 'react'
-import {BrowserRouter as Router,Link,Route} from "react-router-dom";
-
-function Home(){
-    return(
-        <div>
-            <h1>admin首页</h1>
-        </div>
-    )
-}
-function Me(props){
+import React,{ Component } from 'react'
+import {BrowserRouter as Router,Route,Link,Redirect} from  'react-router-dom'
+function LoginInfo(props){
+    //props.loginState = 'success'
+    //props.loginState = 'fail'
     console.log(props)
-    return(
-        <div>
-            <h1>admin个人中心</h1>
-        </div>
-    )
+    if(props.location.state.loginState == 'success'){
+        return <Redirect to='/admin'></Redirect>
+    }else{
+        return <Redirect to='login'></Redirect>
+    }
 }
-function Product(){
-    return(
-        <div>
-            <h1>admin产品</h1>
-        </div>
-    )
-}
-function News(props){
-    console.log(props)
-    return(
-        <div>
-            <h1>新闻页 新闻id:{props.match.params.id}</h1>
-        </div>
-    )
-}
-class App extends React.Component{
-    render() {
-        let meObj = {
-            pathname:'/me',//跳转的路径
-            search:'?username=admin',//get请求参数
-            hash:'#abc',//设置的hash值
-            state:{msg:'helloworld'}//传入组件的数据
+let FormCom = ()=>{
+    let pathObj = {
+        pathname:'/loginInfo',
+        state:{
+            loginState:'success'
         }
-        return (
-            <div id='app'>
-                <Router basename='/admin'>
-                    <div className='nav'>
-                        <Link to='/'>Home</Link>
-                        <Link to='/product'>Product</Link>
-                        <Link to={ meObj }>个人中心</Link>
-                        <Link to='/news/4564534'>新闻</Link>
-                    </div>
-                    <Route exact path='/' component={Home}></Route>
-                    <Route path='/product' component={Product}></Route>
-                    <Route path='/me' exact component={Me}></Route>
-                    <Route path='/news/:id' component={News}></Route>
+    }
+    return(
+        <div>
+            <h1>表单验证</h1>
+            <Link to={pathObj}>登录</Link>
+        </div>
+    )
+}
+class childCom extends React.Component{
+    render() {
+        return(
+            <div>
+                <button onClick={this.clickEvent}>跳转到首页</button>
+            </div>
+        )
+
+    }
+    clickEvent=()=>{
+        console.log(this.props)
+        this.props.history.push('/',{msg:'from childCom'})
+    }
+}
+class App extends Component{
+    render() {
+        return(
+            <div>
+                <Router>
+                    <Route path='/' exact component={(props)=>{console.log(props);return(<div><h1>首页</h1></div>)}}></Route>
+                    <Route path='/form' component={FormCom}></Route>
+                    <Route path='/login' exact component={()=>(<div><h1>登录</h1></div>)}></Route>
+                    <Route path='/loginInfo' component={LoginInfo}></Route>
+                    <Route path='/admin' component={()=>(<h1>admin</h1>)}></Route>
+                    <Route path='/child' component={childCom}></Route>
                 </Router>
             </div>
-        );
+        )
     }
 }
 export default App
